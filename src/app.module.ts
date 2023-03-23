@@ -7,13 +7,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
+import { AccountsModule } from './accounts/accounts.module';
 @Module({
   imports: [
     AuthModule, 
     PassportModule,
     JwtModule.register({secret: 'secrete', signOptions: {expiresIn: '1h'}}),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/ChallengeArkus'),
-    UsersModule
+    MongooseModule.forRoot('mongodb://localhost:27017/ChallengeArkus'),
+    UsersModule,
+    AccountsModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
