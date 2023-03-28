@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
 import { CreateClientDto } from './dto/create-client.dto';
+import { InjectModel } from '@nestjs/mongoose';
 import { UpdateClientDto } from './dto/update-client.dto';
-
+import {Clients, ClientsDocument} from './clients.schema';
 @Injectable()
 export class ClientsService {
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+
+
+  constructor(@InjectModel('clients') private clientsModel: Model<ClientsDocument>){
+
+  }
+  async create(createClientDto: CreateClientDto) {
+    const createdClient = new this.clientsModel(CreateClientDto);
+    return createdClient.save();
   }
 
-  findAll() {
-    return `This action returns all clients`;
+  async findAll():Promise<Clients[]> {
+    const clients = await this.clientsModel.find();
+    return clients;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
+  async findOne(params):Promise<Clients> {
+    const client = await this.clientsModel.findOne({ _id : params.id });
+    return client;
   }
 
-  update(id: number, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
+  async update(params, updateClientDto: UpdateClientDto) {
+    let clientToUpdate = await this.clientsModel.findOne({_id: params.id});
+    let updatedUser = Object.assign(clientToUpdate, updateClientDto); 
+    return updatedUser.save();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} client`;
+  async remove(params) {
+    const deletedclient = await this.clientsModel.deleteOne({_id :params.id});
+    return deletedclient;
   }
 }

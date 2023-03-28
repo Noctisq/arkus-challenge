@@ -12,7 +12,6 @@ export class AccountsService {
   }
 
   async create(createAccountDto: CreateAccountDto): Promise<Accounts> {
-    console.log(createAccountDto)
     const createdAccount = new this.accountsModel(createAccountDto);
     return createdAccount.save();
   }
@@ -34,8 +33,8 @@ export class AccountsService {
   }
 
   async remove(params) {
-    const deletedUser = await this.accountsModel.deleteOne({_id :params.id});
-    console.log(deletedUser);
-    return deletedUser;
+    const deletedAccount = await this.accountsModel.deleteOne({_id :params.id});
+    console.log(deletedAccount);
+    return deletedAccount;
   }
 }
