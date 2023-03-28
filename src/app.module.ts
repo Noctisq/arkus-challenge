@@ -8,6 +8,9 @@ import { JwtStrategy } from './auth/jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { TeamMovesModule } from './team-moves/team-moves.module';
+import { LogsModule } from './logs/logs.module';
+import { ClientsModule } from './clients/clients.module';
 @Module({
   imports: [
     AuthModule, 
@@ -15,7 +18,10 @@ import { AccountsModule } from './accounts/accounts.module';
     JwtModule.register({secret: 'secrete', signOptions: {expiresIn: '1h'}}),
     MongooseModule.forRoot('mongodb://localhost:27017/ChallengeArkus'),
     UsersModule,
-    AccountsModule
+    AccountsModule,
+    TeamMovesModule,
+    LogsModule,
+    ClientsModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

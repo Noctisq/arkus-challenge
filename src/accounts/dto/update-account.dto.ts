@@ -1,4 +1,22 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAccountDto } from './create-account.dto';
+import {IsEmail, IsNotEmpty, IsString} from 'class-validator';
+import { Team } from '../types/account.type';
 
-export class UpdateAccountDto extends PartialType(CreateAccountDto) {}
+export class UpdateAccountDto {
+    
+    @IsNotEmpty()
+    @IsString()
+    readonly accountName?: string;
+    
+    @IsNotEmpty()
+    @IsString()
+    readonly clientName?: string;
+    
+    @IsNotEmpty()
+    @IsString()
+    readonly responsible?: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    @IsString()
+    readonly team?: Team; 
+}
