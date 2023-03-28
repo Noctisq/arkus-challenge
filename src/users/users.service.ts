@@ -30,7 +30,7 @@ export class UsersService {
     return updatedUser.save();
   }
   async deleteUser(params){
-    const deletedUser = await this.userModel.deleteOne({id :params.id});
+    const deletedUser = await this.userModel.deleteOne({_id :params.id});
     return deletedUser;
   }
 }
